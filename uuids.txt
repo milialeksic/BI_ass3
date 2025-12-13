@@ -1,5 +1,6 @@
 bu_ass_uuid_executor : b976c7cd-08be-4134-9783-22f1c3441a13
 ld_ass_uuid_writer : c3662868-04b8-4958-a7ba-d6ccc2849f9f
+ld_ass_uuid_executor : 2434d382-04c0-4aa2-aaf7-23a082327305
 co_ass_uuid_executor : 4803f9b0-c2b7-427b-be61-a37f2279bc79
 co_ass_uuid_writer : e44e7b7b-89d5-44f1-abbe-5deb0e06f190
 ior_ass_uuid_executor : 67d200d8-99e2-4ad9-8821-131ada033f02

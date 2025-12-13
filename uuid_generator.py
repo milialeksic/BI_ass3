@@ -3,6 +3,7 @@ import uuid
 uuids = {
     "bu_ass_uuid_executor":"",
     "ld_ass_uuid_writer":"",
+    "ld_ass_uuid_executor":"",
     "co_ass_uuid_executor":"",
     "co_ass_uuid_writer": "",
     "ior_ass_uuid_executor":"",
