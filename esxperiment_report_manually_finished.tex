@@ -102,9 +102,32 @@ incorrect numerical interpretation.
 \item Numerical features were standardized using StandardScaler. This is done in order to to ensure comparable
 feature scales and stable regression behavior. One-hot encoded categorical
 features and the target variable were excluded from scaling.
-\item 3b Preprocessing Steps Considered but Not Applied
-\item 3c Derived Attributes
-\item 3d External Data Sources and Attributes
+\item \textbf{3b Preprocessing Steps Considered but Not Applied} 
+
+Several preprocessing options were evaluated but deliberately not applied.
+\begin{enumerate}
+    \item Outlier removal was considered based on statistical calculation. However, identified outliers correspond to valid high-value transactions and were retained.
+    \item Label (ordinal) encoding of categorical attributes was rejected to avoid introducing artificial ordering into nominal variables.
+    \item Binning of the target variable (Rating) was not applied, because analysis is formulated as regression task and binning would reduce information granularity.
+    \item The raw Date and Time attributes were not used directly, because regression models cannot meaningfully interpret timestamps without transformation.
+\end{enumerate}
+
+
+\item \textbf{3c Derived Attributes}
+
+Derived attributes were introduced to improve interpretability and predictive performance.
+\begin{enumerate}
+    \item Nominal categorical variables were transformed using one-hot encoding to avoid artificial ordering assumptions.
+    \item Temporal information was extracted from Date and Time attributes by in a way that month, day of week, hour and minute features were derived to capture seasonal, weekly, and intra-day effects.
+\end{enumerate}
+More complex derived attributes were considered but not applied to avoid not necessary feature expansion.
+
+\item \textbf{ 3d External Data Sources and Attributes}
+
+Additional external data sources could potentially improve the prediction of customer ratings.
+Examples include promotional calendars, public holidays, local events,
+or regional economic indicators. This type of data could help to explain contextual and temporal variations
+in customer satisfaction. These data sources were not integrated because of limited availability.
 \end{itemize}
 
 Each activity explicitly records its input and output datasets using provenance relations
@@ -139,7 +162,7 @@ The model was trained using the following hyperparameter settings:
     \toprule
     \textbf{Parameter} & \textbf{Description} & \textbf{Value} \\
     \midrule
-    Learning Rate & ... & 1.23 \\
+    
     \bottomrule
   \end{tabular}
 \end{table}
@@ -147,10 +170,10 @@ The model was trained using the following hyperparameter settings:
 \subsection{Training Run}
 A training run was executed with the following characteristics:
 \begin{itemize}
-    \item \textbf{Algorithm:} Random Forest Algorithm
-    \item \textbf{Start Time:} 2025-12-15 20:45:27
-    \item \textbf{End Time:} 2025-12-15 20:45:27
-    \item \textbf{Result:} R-squared Score = 1.2300
+    \item \textbf{Algorithm:} 
+    \item \textbf{Start Time:} 
+    \item \textbf{End Time:} 
+    \item \textbf{Result:}  = 
 \end{itemize}
 
 %% --- 5. Evaluation ---
