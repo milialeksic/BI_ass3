@@ -4,7 +4,7 @@
 \setcopyright{acmlicensed}
 \copyrightyear{2025}
 \acmYear{2025}
-\acmDOI{XXXXXXX.XXXXXXX}
+\acmDOI{https://doi.org/10.5281/zenodo.17955246}
 
 \acmConference[BI 2025]{Business Intelligence}{-}{-}
 
@@ -12,7 +12,19 @@
 
 \title{BI2025 Experiment Report - Group 008}
 %% ---Authors: Dynamically added ---
+\author{Milica Aleksic}
+\authornote{Student A, Matr.Nr.: 12424821}
+\affiliation{
+  \institution{TU Wien}
+  \country{Austria}
+}
 
+\author{Vidak Grujic}
+\authornote{Student B, Matr.Nr.: 12332263}
+\affiliation{
+  \institution{TU Wien}
+  \country{Austria}
+}
 
 \begin{abstract}
   This report documents the machine learning experiment for Group 008, following the CRISP-DM process model.
@@ -100,7 +112,9 @@ The following features were identified in the dataset:
 \end{table}
 
 
-\subsectionData Understanding – Outlier Detection
+
+\subsection{Data Understanding – Outlier Detection}
+
 Potential outliers were identified using Z-score based approach for numerical attributes.
 Treshold of 2.2 is used as cut-off value.
 The analysis shows that outliers were not detected for Unit price, Quantity, or Rating.
@@ -114,7 +128,10 @@ The detected outliers correspond to unusually big purchase rather than
 error values. This indicates the presence of high-value transactions rather than
 data quality issues.
 
-\subsectionData Understanding – Outlier Assessment
+
+
+
+\subsection{Data Understanding – Outlier Assessment}
 The outlier report was inspected to check the authenticity of the detected values.
 The identified outliers occur only in monetary attributes and correspond to
 large but realistic purchase amounts.
@@ -127,9 +144,13 @@ customer spending rather than data errors.
 Any potential handling of extreme values (e.g. capping or transformation) is moved
 to the Data Preparation phase if required by the modeling approach.
 
+
+
 \textbf{Outlier Decision:} No outliers removed during Data Understanding; decision deferred to Data Preparation.
 
-\subsectionStatistical Properties and Correlations
+
+\subsection{Statistical Properties and Correlations}
+
 Statistical properties and correlations were computed for all numeric attributes of
 Supermarket Sales dataset. The dataset contains 1,000 complete records with no missing
 values.
@@ -154,6 +175,7 @@ These results indicate that customer satisfaction is not primarily driven by pur
 volume or price-related factors only. Instead, categorical attributes, for example, branch,
 product line, payment method and potential non-linear effects are likely to play a more
 important role in predicting customer ratings.
+
 
 
 \begin{table}[h]
@@ -222,6 +244,243 @@ Rating & 4.000000 & 5.500000 & 8.500000 & 10.000000 \\
 
 
 
+\subsection{Distribution and Skewness Check}
+Skewness was computed for all numeric attributes. Monetary variables
+(Sales, cogs, Tax 5\%, gross income) show positive skewness
+(approx. 0.89), which indicates right-skewed distributions which were caused by small
+number of high-value transactions.
+
+Unit price, Quantity, and the target variable (Rating) shows very low
+skewness (close to zero), which indicates approximately symmetric distributions.
+
+The observed skewness patterns are typical for retail transaction data and do not indicate data quality issues.
+
+Calculated skewness values:
+\{
+  "Unit price": 0.007077447853328846,
+  "Quantity": 0.012941048017172435,
+  "Tax 5\%": 0.8925698049581423,
+  "Sales": 0.8925698049581418,
+  "cogs": 0.8925698049581418,
+  "gross income": 0.8925698049581423,
+  "Rating": 0.00900964876573073
+\}
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lr}
+\hline
+\textbf{Variable} & \textbf{Skewness} \\
+\hline
+Tax 5\% & 0.892570 \\
+gross income & 0.892570 \\
+Sales & 0.892570 \\
+cogs & 0.892570 \\
+Quantity & 0.012941 \\
+Rating & 0.009010 \\
+Unit price & 0.007077 \\
+\hline
+\end{tabular}
+\caption{Calculated skewness values of numerical attributes}
+\label{tab:skewness}
+\end{table}
+
+
+
+\subsection{Plausibility of Values Check}
+Plausibility check was done based on minimum, maximum, and median values. It shows that all numeric
+attributes are located within realistic ranges for supermarket transactions. Unit prices range
+from about 10 to 100, quantities from 1 to 10 items, and total sales from approximately 11 to
+1,043. Customer ratings range from 4 to 10.
+
+The gross margin percentage is constant across all records, which explains its zero variance.
+No implausible or erroneous values (e.g., negative prices or quantities) were detected.
+Plausibility summary:
+\{
+  "min": \{
+    "Unit price": 10.08,
+    "Quantity": 1.0,
+    "Tax 5\%": 0.5085,
+    "Sales": 10.6785,
+    "cogs": 10.17,
+    "gross margin percentage": 4.761904762,
+    "gross income": 0.5085,
+    "Rating": 4.0
+  \},
+  "max": \{
+    "Unit price": 99.96,
+    "Quantity": 10.0,
+    "Tax 5\%": 49.65,
+    "Sales": 1042.65,
+    "cogs": 993.0,
+    "gross margin percentage": 4.761904762,
+    "gross income": 49.65,
+    "Rating": 10.0
+  \},
+  "median": \{
+    "Unit price": 55.230000000000004,
+    "Quantity": 5.0,
+    "Tax 5\%": 12.088000000000001,
+    "Sales": 253.848,
+    "cogs": 241.76,
+    "gross margin percentage": 4.761904762,
+    "gross income": 12.088000000000001,
+    "Rating": 7.0
+  \}
+\}
+
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lrrr}
+\hline
+\textbf{Variable} & \textbf{min} & \textbf{max} & \textbf{median} \\
+\hline
+Unit price & 10.080000 & 99.960000 & 55.230000 \\
+Quantity & 1.000000 & 10.000000 & 5.000000 \\
+Tax 5\% & 0.508500 & 49.650000 & 12.088000 \\
+Sales & 10.678500 & 1042.650000 & 253.848000 \\
+cogs & 10.170000 & 993.000000 & 241.760000 \\
+gross margin percentage & 4.761905 & 4.761905 & 4.761905 \\
+gross income & 0.508500 & 49.650000 & 12.088000 \\
+Rating & 4.000000 & 10.000000 & 7.000000 \\
+\hline
+\end{tabular}
+\caption{Minimum, maximum, and median values of numerical attributes}
+\end{table}
+
+
+
+\subsection{Visual Exploration and Hypothesis Generation}
+Visual exploration shows that customer ratings are evenly distributed between
+4 and 10, with no extreme concentration at single value. This indicates balanced
+target variable suitable for regression modeling.
+
+The boxplot of Rating by Product Line reveals small but noticeable differences in median
+ratings across product categories, while overall spread of ratings is similar.
+This suggests that product line may have influence on customer satisfaction, but no
+single category dominates ratings completely.
+
+These observations support inclusion of categorical features, such as product line,
+in the predictive model.
+Visual summary:
+\{
+  "figures\_generated": 2,
+  "description": "Histogram of Rating and boxplot of Rating by Product Line.",
+  "rating\_summary": \{
+    "count": 1000.0,
+    "mean": 6.9727,
+    "std": 1.7185802943791215,
+    "min": 4.0,
+    "25\%": 5.5,
+    "50\%": 7.0,
+    "75\%": 8.5,
+    "max": 10.0
+  \},
+  "mean\_rating\_by\_product\_line": \{
+    "Electronic accessories": 6.924705882352941,
+    "Fashion accessories": 7.0292134831460675,
+    "Food and beverages": 7.113218390804598,
+    "Health and beauty": 7.003289473684211,
+    "Home and lifestyle": 6.8375,
+    "Sports and travel": 6.916265060240963
+  \}
+\}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{visual_exploration_rating_distribution.png}
+    \caption{Customer Rating by Product Line}
+
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{visual_exploration_rating_product_line.png}
+    \caption{Boxplot of Rating by Product Line}
+
+\end{figure}
+
+
+
+\subsection{Bias Evaluation Logging}
+Ethical risks:
+Ethically sensitive attributes are present in Supermarket Sales dataset,  potentially
+Gender and Customer type (Member vs. Normal). There is high chance that thhese attributes could potentially introduce
+bias in the model if model predictions are used to treat customers in different way based on predicted
+satisfaction.
+
+Unbalanced Distributions and Bias Risk:
+Target variable (Rating) is well
+distributed across its range (4–10), and no extremes of low or high
+ratings was observed. Therefore, we assume that there is no bias which arises from target imbalance.
+
+However, the usage of predicted ratings to prioritize service, offers, or attention for specific
+customer groups could lead to unfair treatment. To overcome this risk, sensitive attributes
+should be handled carefully and used only for analysis, not for decision
+making.
+
+Model evaluation should focus on overall performance (e.g., MAE) and include subgroup
+analysis (e.g., by customer type or gender) to ensure consistent prediction quality across
+different customer groups.
+
+
+
+
+\subsection{Risks and Expert Questions Logging}
+Potential Risks and Bias:
+1. Behavioral Noise: Customer ratings are subjective and can be influenced by not constant
+   factors such as mood, time pressure, or individual expectations. This can introduce
+   noise which cannot be fully explained by transaction data alone.
+
+2. Omitted Variables: Dataset does not detect important contextual factors such as
+   staff behavior, waiting time, promotions, or how much the store is crowded, which may significantly
+   influence customer satisfaction.
+
+3. Usage Bias: If predicted ratings are used to prioritize service or offers, this could
+   lead to unfair treatment for certain customer groups (e.g., Normal vs. Member customers).
+
+Questions for an External Expert:
+1. Rating Process: Under what conditions are ratings collected, and how consistent is the rating behavior
+   across customers?
+2. Operational Factors: Are there store-level or operational variables (e.g., staffing,
+   queue length, time of day effects) that could be added to better explain
+   customer satisfaction?
+3. Ethical Use: What should be applied to ensure predicted ratings are used
+   to improve service quality rather than to discriminate between customer groups?
+
+
+
+
+\subsection{Required Data Preparation Actions Logging}
+Based on the Data Understanding analysis, following actions are required in
+Data Preparation phase (Section 3):
+
+1. Feature Encoding: Categorical attributes such as Branch, City, Customer
+   type, Gender, Product line, and Payment must be encoded so they can be usable by regression models.
+
+2. Feature Scaling (Recommended): Numerical attributes (e.g., Unit price, Quantity,
+   Sales, cogs, gross income) should be scaled (e.g., using StandardScaler) to ensure
+   they could be comparable across features, especially for models sensitive to feature scale.
+
+3. Feature Selection / Redundancy Handling: Strongly related monetary attributes
+   (Sales, cogs, Tax 5\%, gross income) should be reviewed to avoid multicollinearity.
+   One or more redundant variables may be removed or combined.
+
+4. Constant Feature Removal: The attribute 'gross margin percentage' is constant and
+   should be removed because it provides no predictive information.
+
+5. Outlier Handling (Optional): Detected outliers represent valid high-value
+   transactions and do not require removal. Robust transformations may be considered
+   if required by specific models.
+
+6. Extract simple date features: From the 'Date' attribute, extract simple features such as day of week or month.
+This is done because regression models cannot directly interpret date values. 
+
+7. Target Variable Preparation: The target variable (Rating) requires no transformation
+   and can be used directly for regression modeling.
 
 
 
@@ -259,6 +518,30 @@ features and the target variable were excluded from scaling.
 \item 3c Derived Attributes
 \item 3d External Data Sources and Attributes
 \end{itemize}
+
+
+\subsubsection{3b Preprocessing Steps Considered but Not Applied}
+
+Several preprocessing options were evaluated but deliberately not applied.
+1. Outlier removal was considered based on statistical calculation. However, identified outliers correspond to valid high-value transactions and were retained.
+2. Label (ordinal) encoding of categorical attributes was rejected to avoid introducing artificial ordering into nominal variables.
+3. Binning of the target variable (Rating) was not applied, because analysis is formulated as regression task and binning would reduce information granularity.
+4. The raw Date and Time attributes were not used directly, because regression models cannot meaningfully interpret timestamps without transformation.
+
+\subsubsection{3c Derived Attributes}
+
+Derived attributes were introduced to improve interpretability and predictive performance.
+1. Nominal categorical variables were transformed using one-hot encoding to avoid artificial ordering assumptions.
+2. Temporal information was extracted from Date and Time attributes by in a way that month, day of week, hour and minute features were derived to capture seasonal, weekly, and intra-day effects.
+More complex derived attributes were considered but not applied to avoid not necessary feature expansion.
+
+\subsubsection{3d External Data Sources and Attributes}
+
+Additional external data sources could potentially improve the prediction of customer ratings.
+Examples include promotional calendars, public holidays, local events,
+or regional economic indicators. This type of data could help to explain contextual and temporal variations
+in customer satisfaction. These data sources were not integrated because of limited availability.
+
 
 
 
@@ -303,8 +586,8 @@ The model was trained using the following hyperparameter settings:
 A training run was executed with the following characteristics:
 \begin{itemize}
     \item \textbf{Algorithm:} Random Forest Algorithm
-    \item \textbf{Start Time:} 2025-12-15 20:45:27
-    \item \textbf{End Time:} 2025-12-15 20:45:27
+    \item \textbf{Start Time:} 2025-12-16 17:45:16
+    \item \textbf{End Time:} 2025-12-16 17:45:16
     \item \textbf{Result:} R-squared Score = 1.2300
 \end{itemize}
 
