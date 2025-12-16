@@ -39,6 +39,32 @@ The primary business objectives are:
 2. Predict customer ratings based on available information.
 3. Detect scenarios likely to produce low ratings and support decisions to improve service.
 
+\subsection{Business Success Criteria}
+The project will be considered a business success if:
+1. The model predicts customer ratings with useful accuracy (e.g., MAE sufficiently low to distinguish low vs. high satisfaction cases).
+2. The system can identify transactions likely to result in low ratings, which would enable proactive service improvements.
+3. The analysis provides useful insights into factors associated with customer satisfaction.
+
+\subsection{Data Mining Goals}
+The data mining goals are:
+1. Train a regression model to predict the continuous customer rating variable.
+2. Understand feature importance to identify which attributes most influence satisfaction.
+3. Optionally compare multiple ML models.
+4. Ensure full reproducibility of all experiments.
+
+\subsection{Data Mining Success Criteria}
+Data mining will be considered successful if:
+1. The model achieves meaningful and realistic MAE threshold (e.g., ≤ 1.0).
+2. The model is interpretable, allowing business users to understand what determines the low satisfaction.
+3. The entire workflow is reproducible and computationally efficient.
+
+\subsection{AI Risk Aspects}
+Relevant AI risks include:
+1. Customer type (Member/Normal) could result in unfair treatment if misused.
+2. Using model predictions to treat customers differently could be unethical or discriminatory.
+3. Predictions must be used only as decision support and not as a mechanism for unequal service.
+
+
 %% --- 2. Data Understanding ---
 \section{Data Understanding}
 \textbf{Dataset Description:} Transaction-level supermarket sales data including customer attributes, product information, sales amounts, timestamps, and customer ratings.
@@ -73,6 +99,133 @@ The following features were identified in the dataset:
   \end{tabular}
 \end{table}
 
+
+\subsectionData Understanding – Outlier Detection
+Potential outliers were identified using Z-score based approach for numerical attributes.
+Treshold of 2.2 is used as cut-off value.
+The analysis shows that outliers were not detected for Unit price, Quantity, or Rating.
+
+Outliers were identified for Tax 5\%, Sales, cogs, and gross income. These outliers occur
+at the same transaction indices across these attributes, which is expected because
+these monetary variables are deterministically related (Sales = cogs + Tax 5\% and
+gross income is proportional to cogs).
+
+The detected outliers correspond to unusually big purchase rather than
+error values. This indicates the presence of high-value transactions rather than
+data quality issues.
+
+\subsectionData Understanding – Outlier Assessment
+The outlier report was inspected to check the authenticity of the detected values.
+The identified outliers occur only in monetary attributes and correspond to
+large but realistic purchase amounts.
+
+Because these values represent valid high-spending transactions and no outliers were
+detected for the target variable (Rating), no records are removed during the Data
+Understanding phase. The presence of these values reflects natural variability in
+customer spending rather than data errors.
+
+Any potential handling of extreme values (e.g. capping or transformation) is moved
+to the Data Preparation phase if required by the modeling approach.
+
+\textbf{Outlier Decision:} No outliers removed during Data Understanding; decision deferred to Data Preparation.
+
+\subsectionStatistical Properties and Correlations
+Statistical properties and correlations were computed for all numeric attributes of
+Supermarket Sales dataset. The dataset contains 1,000 complete records with no missing
+values.
+
+Descriptive statistics show that unit prices range is from approximately 10 to 100, with a
+mean = 55.7. Customers purchase on usually 5 to 6 items per transaction, with
+quantities which have range from 1 to 10. Sales amounts and cost-related attributes 
+The gross margin percentage is constant across all records (4.76\%),
+which results in zero variance.
+
+Customer ratings range from 4 to 10, with mean  approx. 6.97 and standard
+deviation of 1.72, which indicates moderate variability in customer satisfaction.
+
+Pearson correlation analysis with regression target 'Rating' reveals that none of
+numeric attributes have a strong linear relationship with target variable. All
+observed correlations are close to zero (|r| < 0.04). Money related attributes such as Sales,
+cogs, Tax 5\%, and gross income show similar correlations with target, which confirms 
+their relationships. The constant gross margin percentage shows no defined
+correlation.
+
+These results indicate that customer satisfaction is not primarily driven by purchase
+volume or price-related factors only. Instead, categorical attributes, for example, branch,
+product line, payment method and potential non-linear effects are likely to play a more
+important role in predicting customer ratings.
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lr}
+\hline
+\textbf{Variable} & \textbf{Correlation} \\
+\hline
+Rating & 1.000000 \\
+Unit price & -0.008778 \\
+Quantity & -0.015815 \\
+cogs & -0.036442 \\
+Tax 5\% & -0.036442 \\
+gross income & -0.036442 \\
+Sales & -0.036442 \\
+gross margin percentage & nan \\
+\hline
+\end{tabular}
+\caption{Correlation of numerical attributes with Rating}
+\end{table}
+
+
+
+\begin{table}[h]
+\centering
+\scriptsize
+\begin{tabular}{lrrrr}
+\hline
+\textbf{Variable} & \textbf{count} & \textbf{mean} & \textbf{std} & \textbf{median} \\
+\hline
+Unit price & 1000.0 & 55.672130 & 26.494628 & 55.230000 \\
+Quantity & 1000.0 & 5.510000 & 2.923431 & 5.000000 \\
+Tax 5\% & 1000.0 & 15.379369 & 11.708825 & 12.088000 \\
+Sales & 1000.0 & 322.966749 & 245.885335 & 253.848000 \\
+cogs & 1000.0 & 307.587380 & 234.176510 & 241.760000 \\
+gross margin percentage & 1000.0 & 4.761905 & 0.000000 & 4.761905 \\
+gross income & 1000.0 & 15.379369 & 11.708825 & 12.088000 \\
+Rating & 1000.0 & 6.972700 & 1.718580 & 7.000000 \\
+\hline
+\end{tabular}
+\caption{Count, mean, standard deviation, and median of numerical attributes}
+\end{table}
+
+
+
+\begin{table}[h]
+\centering
+\scriptsize
+\begin{tabular}{lrrrr}
+\hline
+\textbf{Variable} & \textbf{min} & \textbf{25\%} & \textbf{75\%} & \textbf{max} \\
+\hline
+Unit price & 10.080000 & 32.875000 & 77.935000 & 99.960000 \\
+Quantity & 1.000000 & 3.000000 & 8.000000 & 10.000000 \\
+Tax 5\% & 0.508500 & 5.924875 & 22.445250 & 49.650000 \\
+Sales & 10.678500 & 124.422375 & 471.350250 & 1042.650000 \\
+cogs & 10.170000 & 118.497500 & 448.905000 & 993.000000 \\
+gross margin percentage & 4.761905 & 4.761905 & 4.761905 & 4.761905 \\
+gross income & 0.508500 & 5.924875 & 22.445250 & 49.650000 \\
+Rating & 4.000000 & 5.500000 & 8.500000 & 10.000000 \\
+\hline
+\end{tabular}
+\caption{Minimum, quartiles, and maximum of numerical attributes}
+\end{table}
+
+
+
+
+
+
+
+
 %% --- 3. Data Preparation ---
 \section{Data Preparation}
 \subsection{Data Cleaning}
@@ -106,6 +259,8 @@ features and the target variable were excluded from scaling.
 \item 3c Derived Attributes
 \item 3d External Data Sources and Attributes
 \end{itemize}
+
+
 
 Each activity explicitly records its input and output datasets using provenance relations
 such as \texttt{prov:used}, \texttt{prov:wasGeneratedBy}, and \texttt{prov:wasDerivedFrom},
