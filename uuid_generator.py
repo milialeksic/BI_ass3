@@ -1,4 +1,5 @@
 import uuid
+import os
 
 uuids = {
     "bu_ass_uuid_executor":"",
@@ -36,12 +37,43 @@ uuids = {
     "ass_uuid_executor_3c" : "",
     "ass_uuid_writer_3c"   : "",
     "ass_uuid_executor_3d" : "",
-    "ass_uuid_writer_3d"   : ""
+    "ass_uuid_writer_3d"   : "", 
+    "dma_ass_uuid_writer": "",
+    "dma_ass_uuid_executor": "", 
+    "hp_ass_uuid_writer": "", 
+    "hp_ass_uuid_executor": "", 
+    "split_ass_uuid_writer": "", 
+    "split_ass_uuid_executor": "",
+    "tafm_ass_uuid_writer": "", 
+    "tafm_ass_uuid_executor": "", 
+    "retrain_ass_uuid_writer": "", 
+    "retrain_ass_uuid_executor": ""
 
 }
-for key in uuids.keys():
-    value = uuid.uuid4()
-    uuids[key] = value
-with open("uuids.txt","w") as f:
-    for (k,v) in uuids.items():
-        f.write(k+" : "+str(v)+ "\n")
+
+# Function is corrected to generate uuids only for the ones that doesn't 
+# already exists in uuids.txtr file. Just add the variable name in the dictionary
+# and it will generate uuid for that variable, while others will be not changed
+
+UUID_FILE = "uuids.txt"
+
+# Load existing UUIDs (if file exists)
+if os.path.exists(UUID_FILE):
+    with open(UUID_FILE, "r") as f:
+        for line in f:
+            if ":" in line:
+                key, value = line.split(":", 1)
+                key = key.strip()
+                value = value.strip()
+                if key in uuids and value:
+                    uuids[key] = value
+
+# Generate UUIDs only for missing entries
+for key, value in uuids.items():
+    if not value:
+        uuids[key] = str(uuid.uuid4())
+
+# Write back to file
+with open(UUID_FILE, "w") as f:
+    for k, v in uuids.items():
+        f.write(f"{k} : {v}\n")

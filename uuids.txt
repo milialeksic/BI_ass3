@@ -34,3 +34,13 @@ ass_uuid_executor_3c : 3af6613a-d2ce-452a-ad54-90875e3b8772
 ass_uuid_writer_3c : 97748357-4ebe-4a43-b899-9d88dec37191
 ass_uuid_executor_3d : ed069340-5a8d-4539-b60b-cb0872d678d6
 ass_uuid_writer_3d : cde95156-a7ea-44f2-80be-7b5eddfcac48
+dma_ass_uuid_writer : c4dac91f-f66f-463a-99e7-f7a1f530824f
+dma_ass_uuid_executor : 72877f2f-b0f1-4965-8644-ce3d6ab16e88
+hp_ass_uuid_writer : 6f6410b8-4901-4e23-979d-a08cfa42a1f9
+hp_ass_uuid_executor : 9bfc3505-a6bb-4829-adca-e6144e42cf2d
+split_ass_uuid_writer : 3fd25a22-61c1-43c6-a048-93e92af9be07
+split_ass_uuid_executor : 469c1f18-f05c-4fa5-a950-989bfdff368a
+tafm_ass_uuid_writer : 2e69f201-85f4-4044-8c27-99060f20bfef
+tafm_ass_uuid_executor : fb94d623-ba4d-415b-801b-fb45515470ba
+retrain_ass_uuid_writer : 93587221-d9b2-4266-a68a-623715b7b5d0
+retrain_ass_uuid_executor : b46dfb27-fcae-43aa-8de9-0f77a32b151e
