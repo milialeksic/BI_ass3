@@ -47,7 +47,8 @@ uuids = {
     "tafm_ass_uuid_writer": "", 
     "tafm_ass_uuid_executor": "", 
     "retrain_ass_uuid_writer": "", 
-    "retrain_ass_uuid_executor": ""
+    "retrain_ass_uuid_executor": "", 
+    "eval_ass_uuid": ""
 
 }
 
