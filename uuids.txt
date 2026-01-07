@@ -44,3 +44,9 @@ tafm_ass_uuid_writer : 2e69f201-85f4-4044-8c27-99060f20bfef
 tafm_ass_uuid_executor : fb94d623-ba4d-415b-801b-fb45515470ba
 retrain_ass_uuid_writer : 93587221-d9b2-4266-a68a-623715b7b5d0
 retrain_ass_uuid_executor : b46dfb27-fcae-43aa-8de9-0f77a32b151e
+sota_ass_uuid:a97598ef-b07c-421d-af4c-a042f8752646
+baseline_ass_uuid:bd488b10-04e4-439c-b6f0-3e3526a26902
+compare_ass_uuid:b8792d6e-7eaf-4d78-984c-0daa9b40700b
+bu_compare_ass_uuid:81e35651-24ee-49b7-b871-5d7b50e2ae60
+bias_ass_uuid:46962800-71a4-447a-ac02-a00d3d44a68b
+dep_ass_uuid_executor:72528461-ad49-41ba-88d3-574e839be373

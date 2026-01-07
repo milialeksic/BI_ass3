@@ -55,26 +55,40 @@ uuids = {
 # Function is corrected to generate uuids only for the ones that doesn't 
 # already exists in uuids.txtr file. Just add the variable name in the dictionary
 # and it will generate uuid for that variable, while others will be not changed
+def main_function():
+    UUID_FILE = "uuids.txt"
+    
+    # Load existing UUIDs (if file exists)
+    if os.path.exists(UUID_FILE):
+        with open(UUID_FILE, "r") as f:
+            for line in f:
+                if ":" in line:
+                    key, value = line.split(":", 1)
+                    key = key.strip()
+                    value = value.strip()
+                    if key in uuids and value:
+                        uuids[key] = value
+    
+    # Generate UUIDs only for missing entries
+    for key, value in uuids.items():
+        if not value:
+            uuids[key] = str(uuid.uuid4())
+    
+    # Write back to file
+    with open(UUID_FILE, "w") as f:
+        for k, v in uuids.items():
+            f.write(f"{k} : {v}\n")
 
-UUID_FILE = "uuids.txt"
+import sys
 
-# Load existing UUIDs (if file exists)
-if os.path.exists(UUID_FILE):
-    with open(UUID_FILE, "r") as f:
-        for line in f:
-            if ":" in line:
-                key, value = line.split(":", 1)
-                key = key.strip()
-                value = value.strip()
-                if key in uuids and value:
-                    uuids[key] = value
+def just_one_uuid_generator():
+    UUID_FILE = "uuids.txt"
+    k = sys.argv[1]
+    v = uuid.uuid4()
+    if os.path.exists(UUID_FILE):
+        with open(UUID_FILE, "a") as f:
+            f.write(f"{k}:{v}\n")
+    
 
-# Generate UUIDs only for missing entries
-for key, value in uuids.items():
-    if not value:
-        uuids[key] = str(uuid.uuid4())
-
-# Write back to file
-with open(UUID_FILE, "w") as f:
-    for k, v in uuids.items():
-        f.write(f"{k} : {v}\n")
+if __name__=="__main__":
+    just_one_uuid_generator()
