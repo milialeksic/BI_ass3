@@ -1,8 +1,42 @@
-DOI - https://doi.org/10.5281/zenodo.17955246
+# BI_ass3
 
+Short description
+A collection of Business Intelligence assignment 3 materials and notebooks demonstrating data analysis, visualizations and report generation for the course assignment.
 
-Important note: our automatically generated report in .tex format is saved under path "data/report/experiment_report.tex". It is exported to the PDF under the name "BI_Assignment3_Report_008_Automatic.pdf". However, because format was not satisfactory, we made some improvements and corrections. The corrected version of report is saved under name "BI_Assignment3_Report_008_Corrected.pdf"
+Contents
+- notebooks/ — primary Jupyter notebooks with analysis and visualization (open in Jupyter or GitHub).
+- data/ — local sample datasets or links (if present).
+- results/ — output tables, figures and exported reports.
+- README.md — this file.
 
+What I implemented
+- Data ingestion and cleaning pipelines for provided datasets.
+- Exploratory data analysis with summary statistics and visualizations.
+- Insights and conclusions documented in the notebooks and exportable reports.
+- Reproducible notebooks, with instructions so a reviewer can re-run the analysis.
 
-GitHub repository - https://github.com/milialeksic/BI_ass3
+How to run
+1. Clone the repository:
+   git clone https://github.com/milialeksic/BI_ass3.git
+2. Create a Python environment (recommended):
+   python -m venv .venv
+   source .venv/bin/activate  # macOS/Linux
+   .venv\Scripts\activate     # Windows
+3. Install dependencies:
+   pip install -r requirements.txt
+   (If requirements.txt is not present, install jupyter, pandas, matplotlib, seaborn, numpy)
+4. Start Jupyter and open the notebooks:
+   jupyter lab
+   or
+   jupyter notebook
 
+Notes
+- If the dataset is large or not included, add the data files under data/ or update the notebook cells that download data.
+- Results and images are stored in results/ where available.
+
+Key files to show reviewers
+- notebooks (main analysis)
+- results/ and any exported PDF reports
+
+Contact
+For questions about the implementation, see my GitHub profile: https://github.com/milialeksic
