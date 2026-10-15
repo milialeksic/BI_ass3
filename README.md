@@ -1,4 +1,4 @@
-# BI_ass3
+# Business Intelligence assignment 3
 
 Short description
 A collection of Business Intelligence assignment 3 materials and notebooks demonstrating data analysis, visualizations and report generation for the course assignment.
